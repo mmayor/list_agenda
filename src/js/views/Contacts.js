@@ -8,7 +8,8 @@ export default class Contacts extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			showModal: false
+			showModal: false,
+			idPendingDeletion: null
 		};
 	}
 
@@ -23,14 +24,15 @@ export default class Contacts extends React.Component {
 					</p>
 					<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 						<ul className="list-group pull-down" id="contact-list">
-							<ContactCard onDelete={() => this.setState({ showModal: true })} />
-							<ContactCard />
-							<ContactCard />
-							<ContactCard />
+							<ContactCard onDelete={id => this.setState({ showModal: true, idPendingDeletion: id })} />
 						</ul>
 					</div>
 				</div>
-				<Modal show={this.state.showModal} onClose={() => this.setState({ showModal: false })} />
+				<Modal
+					id={this.state.idPendingDeletion}
+					show={this.state.showModal}
+					onClose={() => this.setState({ showModal: false })}
+				/>
 			</div>
 		);
 	}

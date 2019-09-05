@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import getState, { getStore } from "../store/flux";
+import PropTypes from "prop-types";
 
-export default class AddContact extends React.Component {
+export default class EditContact extends React.Component {
 	constructor() {
 		super();
+
 		this.state = {
 			nameTemp: null,
 			emailTemp: null,
@@ -15,15 +17,35 @@ export default class AddContact extends React.Component {
 		};
 	}
 
-    clickFunction = () => {}
-    render() {
+	// temp1 = storeTemp.contacto;
+	// let contacTemp = temp1.filter(item => item.id === this.props.id);
+	// nameTemp1 = contacTemp.name_full;
+
+	render() {
+		// this.setState({ nameTemp: objectTemp });
+
+		// this.setState({ nameTemp: store.contacto[this.props.match.params.id].full_name });
+		// console.log(store.contacto[this.props.match.params.id].full_name);
+		// console.log(this.state.nameTemp);
+
 		return (
 			<Context.Consumer>
 				{({ store, actions }) => {
+					//	debugger;
+					let customerId = this.props.match.params.id;
+					let currentCustomer = store.contacto.find(item => item.id === parseInt(customerId));
+					// let temp1 = store.contacto;
+					// let contacTemp = temp1.filter(item => item.id === this.props.id);
+					// let nameTemp1 = contacTemp.name_full;
+					//	console.log(store);
+					//	console.log(currentCustomer);
+
+					//		this.setState({ nameTemp: store.contacto[this.props.match.params.id].full_name });
+
 					return (
 						<div className="container">
 							<div>
-								<h1 className="text-center mt-5">Add a new contact</h1>
+								<h1 className="text-center mt-5">Edit contact</h1>
 								<form>
 									<div className="form-group">
 										<label>Full Name</label>
@@ -31,7 +53,7 @@ export default class AddContact extends React.Component {
 											type="text"
 											className="form-control"
 											placeholder="Full Name"
-											value={this.state.nameTemp}
+											defaultValue={currentCustomer.full_name}
 											onChange={event => this.setState({ nameTemp: event.target.value })}
 										/>
 									</div>
@@ -41,7 +63,7 @@ export default class AddContact extends React.Component {
 											type="email"
 											className="form-control"
 											placeholder="Enter email"
-											value={this.state.emailTemp}
+											defaultValue={currentCustomer.email}
 											onChange={event => this.setState({ emailTemp: event.target.value })}
 										/>
 									</div>
@@ -51,7 +73,7 @@ export default class AddContact extends React.Component {
 											type="phone"
 											className="form-control"
 											placeholder="Enter phone"
-											value={this.state.phoneTemp}
+											defaultValue={currentCustomer.phone}
 											onChange={event => this.setState({ phoneTemp: event.target.value })}
 										/>
 									</div>
@@ -61,7 +83,7 @@ export default class AddContact extends React.Component {
 											type="text"
 											className="form-control"
 											placeholder="Enter address"
-											value={this.state.addressTemp}
+											defaultValue={currentCustomer.address}
 											onChange={event => this.setState({ addressTemp: event.target.value })}
 										/>
 									</div>
@@ -69,11 +91,12 @@ export default class AddContact extends React.Component {
 										type="button"
 										className="btn btn-primary form-control"
 										onClick={() =>
-											actions.addContacto(
+											actions.editContacto(
 												this.state.nameTemp,
 												this.state.emailTemp,
 												this.state.phoneTemp,
-												this.state.addressTemp
+												this.state.addressTemp,
+												customerId
 											)
 										}>
 										save
@@ -90,3 +113,7 @@ export default class AddContact extends React.Component {
 		);
 	}
 }
+
+EditContact.propTypes = {
+	match: PropTypes.object
+};
