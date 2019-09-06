@@ -46,13 +46,13 @@ class ContactCard extends React.Component {
 										<label className="name lead">{item.full_name}</label>
 										<br />
 										<i className="fas fa-map-marker-alt text-muted mr-3" />
-										<span className="text-muted">5842 Hillcrest Rd</span>
+										<span className="text-muted">{item.address}</span>
 										<br />
 										<span
 											className="fa fa-phone fa-fw text-muted mr-3"
 											data-toggle="tooltip"
 											title=""
-											data-original-title="(870) 288-4149"
+											data-original-title={item.phone}
 										/>
 										<span className="text-muted small">(870) 288-4149</span>
 										<br />

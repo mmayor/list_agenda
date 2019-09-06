@@ -15,7 +15,7 @@ const getState = ({ getStore, setStore }) => {
 			//(Arrow) Functions that update the Store
 			// Remember to use the scope: scope.state.store & scope.setState()
 
-			addContacto: (name, email, phone, address) => {
+			addContacto: (name, email, phone, address, history) => {
 				const store = getStore();
 				setStore({
 					newContact: {
@@ -36,10 +36,10 @@ const getState = ({ getStore, setStore }) => {
 					}
 				})
 					.then(response => response.json())
-					.then(setStore({ contacto: store.contacto.concat(contactoTemp) }));
+					.then(setStore({ contacto: store.contacto.concat(contactoTemp) }), history.push("/contacts"));
 			},
 
-			editContacto: (name, email, phone, address, id) => {
+			editContacto: (name, email, phone, address, id, history) => {
 				const store = getStore();
 				setStore({
 					newContact: {
@@ -60,8 +60,10 @@ const getState = ({ getStore, setStore }) => {
 					headers: {
 						"Content-Type": "application/json"
 					}
-				}).then(response => response.json());
-				// .then(setStore({ contacto: store.contacto.concat(contactoTemp) }));
+				})
+					.then(response => response.json())
+					// .then(setStore({ contacto: store.contacto.concat(contactoTemp) }));
+					.then(history.push("/contacts"));
 			},
 
 			delContacto: idContacto => {

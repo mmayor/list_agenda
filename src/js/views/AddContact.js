@@ -15,8 +15,8 @@ export default class AddContact extends React.Component {
 		};
 	}
 
-    clickFunction = () => {}
-    render() {
+	clickFunction = () => {};
+	render() {
 		return (
 			<Context.Consumer>
 				{({ store, actions }) => {
@@ -73,7 +73,8 @@ export default class AddContact extends React.Component {
 												this.state.nameTemp,
 												this.state.emailTemp,
 												this.state.phoneTemp,
-												this.state.addressTemp
+												this.state.addressTemp,
+												this.props.history
 											)
 										}>
 										save
@@ -88,5 +89,9 @@ export default class AddContact extends React.Component {
 				}}
 			</Context.Consumer>
 		);
+
+		AddContact.propTypes = {
+			history: PropTypes.object
+		};
 	}
 }

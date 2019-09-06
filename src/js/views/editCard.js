@@ -4,15 +4,16 @@ import { Context } from "../store/appContext";
 import getState, { getStore } from "../store/flux";
 import PropTypes from "prop-types";
 
+var currentCustomer = {};
 export default class EditContact extends React.Component {
 	constructor() {
 		super();
 
 		this.state = {
-			nameTemp: null,
-			emailTemp: null,
-			phoneTemp: null,
-			addressTemp: null
+			nameTemp: currentCustomer.full_name,
+			emailTemp: currentCustomer.email,
+			phoneTemp: currentCustomer.phone,
+			addressTemp: currentCustomer.address
 			// initialize your state
 		};
 	}
@@ -33,7 +34,7 @@ export default class EditContact extends React.Component {
 				{({ store, actions }) => {
 					//	debugger;
 					let customerId = this.props.match.params.id;
-					let currentCustomer = store.contacto.find(item => item.id === parseInt(customerId));
+					currentCustomer = store.contacto.find(item => item.id === parseInt(customerId));
 					// let temp1 = store.contacto;
 					// let contacTemp = temp1.filter(item => item.id === this.props.id);
 					// let nameTemp1 = contacTemp.name_full;
@@ -96,7 +97,8 @@ export default class EditContact extends React.Component {
 												this.state.emailTemp,
 												this.state.phoneTemp,
 												this.state.addressTemp,
-												customerId
+												customerId,
+												this.props.history
 											)
 										}>
 										save
@@ -115,5 +117,6 @@ export default class EditContact extends React.Component {
 }
 
 EditContact.propTypes = {
-	match: PropTypes.object
+	match: PropTypes.object,
+	history: PropTypes.object
 };
