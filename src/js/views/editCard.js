@@ -4,11 +4,11 @@ import { Context } from "../store/appContext";
 import getState, { getStore } from "../store/flux";
 import PropTypes from "prop-types";
 
-var currentCustomer = {};
 export default class EditContact extends React.Component {
 	constructor() {
 		super();
 
+		var currentCustomer = {};
 		this.state = {
 			nameTemp: currentCustomer.full_name,
 			emailTemp: currentCustomer.email,
@@ -32,9 +32,10 @@ export default class EditContact extends React.Component {
 		return (
 			<Context.Consumer>
 				{({ store, actions }) => {
-					//	debugger;
+					//		debugger;
 					let customerId = this.props.match.params.id;
-					currentCustomer = store.contacto.find(item => item.id === parseInt(customerId));
+					this.currentCustomer = store.contacto.find(item => item.id === parseInt(customerId));
+					// setState({ state: currentCustomer });
 					// let temp1 = store.contacto;
 					// let contacTemp = temp1.filter(item => item.id === this.props.id);
 					// let nameTemp1 = contacTemp.name_full;
@@ -54,7 +55,7 @@ export default class EditContact extends React.Component {
 											type="text"
 											className="form-control"
 											placeholder="Full Name"
-											defaultValue={currentCustomer.full_name}
+											defaultValue={this.currentCustomer.full_name}
 											onChange={event => this.setState({ nameTemp: event.target.value })}
 										/>
 									</div>
@@ -64,7 +65,7 @@ export default class EditContact extends React.Component {
 											type="email"
 											className="form-control"
 											placeholder="Enter email"
-											defaultValue={currentCustomer.email}
+											defaultValue={this.currentCustomer.email}
 											onChange={event => this.setState({ emailTemp: event.target.value })}
 										/>
 									</div>
@@ -74,7 +75,7 @@ export default class EditContact extends React.Component {
 											type="phone"
 											className="form-control"
 											placeholder="Enter phone"
-											defaultValue={currentCustomer.phone}
+											defaultValue={this.currentCustomer.phone}
 											onChange={event => this.setState({ phoneTemp: event.target.value })}
 										/>
 									</div>
@@ -84,14 +85,15 @@ export default class EditContact extends React.Component {
 											type="text"
 											className="form-control"
 											placeholder="Enter address"
-											defaultValue={currentCustomer.address}
+											defaultValue={this.currentCustomer.address}
 											onChange={event => this.setState({ addressTemp: event.target.value })}
 										/>
 									</div>
 									<button
 										type="button"
 										className="btn btn-primary form-control"
-										onClick={() =>
+										onClick={() => {
+											//	this.setState({ state: currentCustomer });
 											actions.editContacto(
 												this.state.nameTemp,
 												this.state.emailTemp,
@@ -99,8 +101,8 @@ export default class EditContact extends React.Component {
 												this.state.addressTemp,
 												customerId,
 												this.props.history
-											)
-										}>
+											);
+										}}>
 										save
 									</button>
 									<Link className="mt-3 w-100 text-center" to="/">

@@ -63,11 +63,19 @@ const getState = ({ getStore, setStore }) => {
 				})
 					.then(response => response.json())
 					// .then(setStore({ contacto: store.contacto.concat(contactoTemp) }));
-					.then(history.push("/contacts"));
+					// .then(history.push("/contacts"));
+
+					.then(() => {
+						fetch("https://3000-f328dc25-2650-4bb1-8039-6c2134bf458d.ws-us1.gitpod.io/contactsNew/")
+							.then(response => response.json())
+							.then(data => {
+								setStore({ contacto: data });
+							}, history.push("/contacts"));
+					});
 			},
 
 			delContacto: idContacto => {
-				debugger;
+				//	debugger;
 				const store = getStore();
 				let temp1 = store.contacto;
 				let temp2 = temp1.filter(item => item.id !== idContacto);
